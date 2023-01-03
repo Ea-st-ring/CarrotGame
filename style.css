@@ -1,0 +1,78 @@
+body {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+#background {
+    width: 1300px;
+    height: 750px;
+}
+
+.background_img{
+    object-fit: fill;
+    overflow: hidden;
+    position: absolute;
+    width: 1300px;
+    height: 750px;
+    z-index: -1;
+}
+
+
+
+.time_text,.count_text {
+    font-size: 80px;
+    margin: 0;
+    text-align: center;
+}
+
+.play_box {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    align-items: center;
+}
+
+.fa-play-circle, .fa-stop-circle{
+    font-size: 72px;
+    
+    
+}
+
+.play_box .fa-stop-circle{ 
+    display: none;  
+    /* .play_box 안쓰니까 적용이 안댐*/
+}
+
+
+.pop_up{
+    background-color: antiquewhite;
+    border: 5px gray solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 90px;
+    margin-top: 40px;
+    top:400px;
+    display: none;
+}
+
+.fa-redo {
+    font-size: 72px;
+}
+.pop_up p {
+    margin: 0;
+    margin-bottom: 24px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.carrot,.bug {
+    width: 80px;
+    height: 90px;
+}
+
+.carrot:hover,.bug:hover{
+    transform: scale(1.1);
+}
