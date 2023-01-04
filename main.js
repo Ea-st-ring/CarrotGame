@@ -4,7 +4,9 @@ const background = document.querySelector('#background');
 const timeText = document.querySelector('.time_text');
 const body = document.querySelector('body');
 const itemBox = document.querySelector('.itemBox');
+const countText = document.querySelector('.count_text');
 
+let count = 10;
 let isPaused = false;
 let countInterval;
 
@@ -43,6 +45,8 @@ function onStart(){
 
 function onPause(){
     isPaused = true;
+    count = 10;
+    countText.innerHTML = count;
     stopCounter(10);
     // 요소들 제거 함수
     clearGround();
@@ -52,7 +56,9 @@ function onPause(){
 //       2. 배경음악 및 효과음 삽입   
 
 function onLose(){
-
+    pause_btn.style.display='none';
+    play_btn.style.display='block';
+    countText.innerHTML = count;
 }
 
 function createItem(className, count) {
@@ -74,11 +80,12 @@ function createItem(className, count) {
     }
 
     itemBox.addEventListener('click', e => {
-
-        
-        (e.target.className=='carrot') ? removeItem(e.target) : removeItem(null);
+        if(!e.target.hasAttribute('disabled') || !e.target.getAttribute('disabled')){
+            (e.target.className=='carrot') ? removeItem(e.target) : removeItem(null);
+        }       
+        e.target.setAttribute("disabled",true);    
     });
-
+    
 }
 
 function randomNumber(min, max) {
@@ -108,6 +115,7 @@ function stopCounter(time){
     timeText.textContent = `00:${time}`;
 }
 
+// itemBox를 통해 제거하는 것으로 개선 필요
 function clearGround(){
     const bugs = document.querySelectorAll('.bug');
     const carrots = document.querySelectorAll('.carrot');
@@ -122,6 +130,7 @@ function clearGround(){
 function removeItem(item){
     if(item!=null){
         item.remove();
+        countText.innerHTML = --count;
     } else{
         onPause();
         onLose();
