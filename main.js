@@ -8,7 +8,15 @@ const countText = document.querySelector('.count_text');
 const popUp = document.querySelector('.pop_up');
 const result = document.querySelector('.pop_up_result');
 const replay_btn = document.querySelector('.fa-redo');
+const bgm = new Audio(); // Audio 객체 생성
+const bugSound = new Audio();
+const carrotSound = new Audio();
+const winSound = new Audio();
 
+bgm.src = "carrot/sound/bg.mp3";
+bugSound.src = "carrot/sound/bug_pull.mp3";
+carrotSound.src = "carrot/sound/carrot_pull.mp3";
+winSound.src = "carrot/sound/game_win.mp3";
 
 let count = 10;
 let isPaused = false;
@@ -27,11 +35,13 @@ play_btn.addEventListener('click',()=>{
 
 pause_btn.addEventListener('click',()=>{
     onPause();
+    
 });
 
 
 
 function onStart(){
+    bgm.play();
     count = 10
     isPaused = false;
     play_btn.style.display='none';
@@ -52,6 +62,7 @@ function onStart(){
 }
 
 function onPause(){
+    bgm.pause();
     isPaused = true;
     count = 10;
     countText.innerHTML = count;
@@ -64,6 +75,8 @@ function onPause(){
 //       2. 배경음악 및 효과음 삽입   
 
 function onWin(){
+    bgm.pause();
+    winSound.play();
     clearGround();
     pause_btn.style.display='none';
     play_btn.style.display='block';
@@ -87,6 +100,7 @@ function onWin(){
 
 
 function onLose(){
+    bgm.pause();
     pause_btn.style.display='none';
     play_btn.style.display='block';
     countText.innerHTML = count;
@@ -177,6 +191,7 @@ function clearGround(){
 
 function removeItem(item){
     if(item!=null){
+        carrotSound.play();
         item.remove();
         countText.innerHTML = --count;
         if(count==0){
@@ -184,6 +199,7 @@ function removeItem(item){
             onWin();
         }
     } else{
+        bugSound.play();
         onPause();
         onLose();
     }

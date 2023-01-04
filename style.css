@@ -33,6 +33,10 @@ body {
     align-items: center;
 }
 
+i:hover{
+    transform: scale(1.1);
+}
+
 .fa-play-circle, .fa-stop-circle{
     font-size: 72px;
     
@@ -53,7 +57,7 @@ body {
     align-items: center;
     text-align: center;
     flex-direction: column;
-    padding: 30px 90px;
+    padding: 15px 90px;
     margin-top: 40px;
     top:400px;
     display: none;
@@ -65,8 +69,12 @@ body {
 .pop_up p {
     margin: 0;
     margin-bottom: 24px;
-    font-size: 36px;
+    font-size: 64px;
     font-weight: bold;
+}
+
+.pop_up i {
+    
 }
 
 .carrot,.bug {
