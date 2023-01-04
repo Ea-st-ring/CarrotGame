@@ -5,6 +5,10 @@ const timeText = document.querySelector('.time_text');
 const body = document.querySelector('body');
 const itemBox = document.querySelector('.itemBox');
 const countText = document.querySelector('.count_text');
+const popUp = document.querySelector('.pop_up');
+const result = document.querySelector('.pop_up_result');
+const replay_btn = document.querySelector('.fa-redo');
+
 
 let count = 10;
 let isPaused = false;
@@ -28,9 +32,13 @@ pause_btn.addEventListener('click',()=>{
 
 
 function onStart(){
+    count = 10
     isPaused = false;
     play_btn.style.display='none';
     pause_btn.style.display='block';
+    countText.innerHTML = count;
+    popUp.style.display = 'none';
+    replay_btn.removeAttribute('disabled');
 
     pause_btn.addEventListener('click',()=>{
         // 초기화 함수
@@ -55,10 +63,48 @@ function onPause(){
 // TODO: 1. onLose 팝업 생성 및 시간 초과 시 호출 
 //       2. 배경음악 및 효과음 삽입   
 
+function onWin(){
+    clearGround();
+    pause_btn.style.display='none';
+    play_btn.style.display='block';
+    countText.innerHTML = count;
+    result.innerHTML = 'You win!';
+    popUp.style.display = 'flex';
+    replay_btn.removeAttribute('disabled');
+
+
+    replay_btn.addEventListener('click',(e)=>{
+        popUp.style.display ='none';
+    
+        if(!e.target.hasAttribute('disabled')){
+            onStart();
+        }
+
+        e.target.setAttribute("disabled",true);
+    });
+}
+
+
+
 function onLose(){
     pause_btn.style.display='none';
     play_btn.style.display='block';
     countText.innerHTML = count;
+    result.innerHTML = 'Lose!';
+    popUp.style.display = 'flex';
+    replay_btn.removeAttribute('disabled');
+
+
+    replay_btn.addEventListener('click',(e)=>{
+        popUp.style.display ='none';
+    
+        if(!e.target.hasAttribute('disabled')){
+            onStart();
+        }
+
+        e.target.setAttribute("disabled",true);
+    });
+
 }
 
 function createItem(className, count) {
@@ -103,7 +149,9 @@ function counter(time){
             timeText.textContent = `00:0${secondsRemaining}`;
         }
         if (secondsRemaining < 0 || isPaused){
-            clearInterval(countInterval); 
+            clearInterval(countInterval);
+            clearGround(); 
+            onLose();
             timeText.textContent = `00:${sec}`;
         };
         secondsRemaining = secondsRemaining - 1;
@@ -131,6 +179,10 @@ function removeItem(item){
     if(item!=null){
         item.remove();
         countText.innerHTML = --count;
+        if(count==0){
+            stopCounter(10);
+            onWin();
+        }
     } else{
         onPause();
         onLose();
