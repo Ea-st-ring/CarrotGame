@@ -1,3 +1,5 @@
+'use strict'
+
 const play_btn = document.querySelector('.fa-play-circle');
 const pause_btn = document.querySelector('.fa-stop-circle');
 const background = document.querySelector('#background');
@@ -23,7 +25,7 @@ let isPaused = false;
 let countInterval;
 
 const clientRect = background.getBoundingClientRect();
-console.log(clientRect);
+
 const clientLeft = clientRect.left + 30;
 const clientRight = clientRect.right - 80;
 const clientTop = clientRect.top + 398;
@@ -41,7 +43,7 @@ pause_btn.addEventListener('click',()=>{
 
 
 function onStart(){
-    bgm.play();
+    playSound(bgm);
     count = 10
     isPaused = false;
     play_btn.style.display='none';
@@ -71,12 +73,10 @@ function onPause(){
     clearGround();
 }
 
-// TODO: 1. onLose 팝업 생성 및 시간 초과 시 호출 
-//       2. 배경음악 및 효과음 삽입   
 
 function onWin(){
-    bgm.pause();
-    winSound.play();
+    stopSound(bgm);
+    playSound(winSound);
     clearGround();
     pause_btn.style.display='none';
     play_btn.style.display='block';
@@ -100,7 +100,7 @@ function onWin(){
 
 
 function onLose(){
-    bgm.pause();
+    stopSound(bgm);
     pause_btn.style.display='none';
     play_btn.style.display='block';
     countText.innerHTML = count;
@@ -191,7 +191,7 @@ function clearGround(){
 
 function removeItem(item){
     if(item!=null){
-        carrotSound.play();
+        playSound(carrotSound);
         item.remove();
         countText.innerHTML = --count;
         if(count==0){
@@ -199,8 +199,18 @@ function removeItem(item){
             onWin();
         }
     } else{
-        bugSound.play();
+        playSound(bugSound);
         onPause();
         onLose();
     }
+}
+
+
+function playSound(sound){
+    sound.currentTime = 0;
+    sound.play();
+}
+
+function stopSound(sound){
+    sound.pause();
 }

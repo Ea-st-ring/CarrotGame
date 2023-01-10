@@ -24,6 +24,7 @@ body {
     font-size: 80px;
     margin: 0;
     text-align: center;
+    color: rgb(39, 0, 48);
 }
 
 .play_box {
@@ -31,6 +32,7 @@ body {
     justify-content: center;
     margin: 20px;
     align-items: center;
+    
 }
 
 i:hover{
@@ -39,7 +41,7 @@ i:hover{
 
 .fa-play-circle, .fa-stop-circle{
     font-size: 72px;
-    
+    color: rgb(0, 0, 0);
     
 }
 
